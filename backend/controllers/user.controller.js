@@ -1,23 +1,21 @@
 import { createError } from "../error.js";
 import User from "../model/User.model.js";
-import { verifyToken } from "../verifyToken.js";
 
 export const update = async (req, res, next) => {
-	if (req.params.id === req.user.id) {
-		try {
-			const updatedUser = await User.findByIdAndUpdate(
-				req.params.id,
-				{
-					$set: req.body,
-				},
-				{ new: true }
-			);
-			res.status(200).json(updatedUser);
-		} catch (err) {
-			next(err);
+	try {
+		if (req.params.id !== req.user.id) {
+			return next(createError(403, "You can update only your account!"));
 		}
-	} else {
-		return next(createError(403, "You can update only your account!"));
+
+		const updatedUser = await User.findByIdAndUpdate(
+			req.params.id,
+			{ $set: req.body },
+			{ new: true }
+		);
+
+		res.status(200).json(updatedUser);
+	} catch (error) {
+		next(error);
 	}
 };
 
