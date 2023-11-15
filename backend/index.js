@@ -17,7 +17,7 @@ const app = express();
 mongoose
 	.connect(process.env.MONGO_URL)
 	.then(() => {
-		console.log("Database Connected Successfully");
+		console.log("DB Connected!!");
 	})
 	.catch((err) => console.log(err));
 
@@ -42,5 +42,5 @@ app.use((err, req, res, next) => {
 // Server Listening
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-	console.log(`Server is running at ${PORT}`);
+	console.log(`server running at port : ${PORT}`);
 });
