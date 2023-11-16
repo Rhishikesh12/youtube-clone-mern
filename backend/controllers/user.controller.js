@@ -1,6 +1,7 @@
 import { createError } from "../error.js";
 import User from "../model/User.model.js";
 
+// Update User
 export const update = async (req, res, next) => {
 	try {
 		if (req.params.id !== req.user.id) {
@@ -19,7 +20,20 @@ export const update = async (req, res, next) => {
 	}
 };
 
-export const deleteUser = (req, res, next) => {};
+// Delete User
+export const deleteUser = async (req, res, next) => {
+	try {
+		if (req.params.id !== req.user.id) {
+			return next(createError(403, "You can delete only your account!"));
+		}
+
+		await User.findByIdAndDelete(req.params.id);
+
+		res.status(200).json("User has been deleted!");
+	} catch (error) {
+		next(error);
+	}
+};
 
 export const getUser = (req, res, next) => {};
 
