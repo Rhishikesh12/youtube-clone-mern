@@ -1,5 +1,5 @@
 import express from "express";
-import {} from "../controllers/video.controller.js";
+import { unused } from "../controllers/video.controller.js";
 const router = express.Router();
 
 //create a video
